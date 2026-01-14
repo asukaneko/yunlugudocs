@@ -34,7 +34,7 @@ export default defineConfig({
       
       GitChangelog({ 
         // 填写在此处填写您的仓库链接
-        repoURL: () => 'https://github.com/asukaneko/vitepress', 
+        repoURL: () => 'https://github.com/asukaneko/yunlugudocs', 
       }), 
       GitChangelogMarkdownSection({
         sections: {
@@ -104,18 +104,18 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/asukaneko/Ncatbot-comic-QQbot' }
+      { icon: 'github', link: 'https://github.com/asukaneko/yunlugudocs' }
     ],
 
     search: {
       provider: 'local'
     },
     footer: {
-      message: 'Released under the <a href="https://github.com/asukaneko/Ncatbot-comic-QQbot/blob/master/LICENSE">Apache 2.0 License</a>.',
+      message: 'Released under the Apache 2.0 License',
       copyright: 'Copyright © 2025-present <a href="https://github.com/asukaneko">Asukaneko</a>'
     },
     editLink: {
-      pattern: 'https://github.com/asukaneko/vitepress',
+      pattern: 'https://github.com/asukaneko/yunlugudocs',
       text: '在GitHub上编辑此页'
     }
   },

@@ -34,7 +34,33 @@ pnpm install
 - `markdown-it-mathjax3`: 支持数学公式渲染。
 - `vitepress-plugin-comment-with-giscus`: 基于 GitHub Discussions 的评论系统。
 
-## 3. 添加新包
+## 3. Giscus 评论插件配置指南
+
+`vitepress-plugin-comment-with-giscus` 允许你的读者通过 GitHub 账号在文档下方留言。
+
+### 配置步骤：
+1. **开启 GitHub Discussions**: 在你的 GitHub 仓库设置中勾选 "Discussions"。
+2. **安装 Giscus App**: 访问 [giscus.app](https://giscus.app)，按照说明安装并授权你的仓库。
+3. **获取参数**: 在 giscus 官网输入你的仓库名，页面会自动生成 `repoId` 和 `categoryId`。
+4. **修改代码**: 打开 `.vitepress/theme/index.ts`，在 `setup()` 函数中更新以下部分：
+
+```typescript
+giscusTalk({
+  repo: 'YOUR_NAME/YOUR_REPO',
+  repoId: '你的仓库ID',
+  category: 'General', // 建议保持 General
+  categoryId: '你的分类ID',
+  mapping: 'pathname', // 评论与页面的对应方式
+  inputPosition: 'bottom',
+  lang: 'zh-CN',
+}, { frontmatter, route }, true);
+```
+
+### 控制评论显示：
+- **全局开启**: 最后一个参数设为 `true`。
+- **单页控制**: 在 `.md` 文件的 Frontmatter 中设置 `comment: false` 即可隐藏该页评论。
+
+## 4. 添加新包
 
 如果你需要添加新的插件，建议安装为开发依赖：
 
