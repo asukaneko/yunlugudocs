@@ -74,16 +74,17 @@ npm install --save-dev nodemon
 
 ## 3.1 `.env`：环境变量
 
-在项目根目录创建 `.env` 文件，用来存放端口和数据库连接字符串：
+在项目根目录创建 `.env` 文件，用来存放端口和数据库连接字符串。**永远不要把这个文件上传到 GitHub！**
 
 ```bash
 PORT=3000
+# 这里的 127.0.0.1 指向你本地的数据库，my_user_db 是数据库名字
 MONGODB_URI=mongodb://127.0.0.1:27017/my_user_db
 ```
 
 说明：
 - `PORT`：服务监听的端口
-- `MONGODB_URI`：MongoDB 连接地址，可以是本地，也可以是 MongoDB Atlas 云地址
+- `MONGODB_URI`：MongoDB 连接地址。如果你使用的是 [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database) 云数据库，连接字符串会更长一些（以 `mongodb+srv://` 开头）。
 
 ## 3.2 `src/config/db.js`：数据库连接
 
@@ -91,12 +92,16 @@ MONGODB_URI=mongodb://127.0.0.1:27017/my_user_db
 // 📂 src/config/db.js
 const mongoose = require('mongoose');
 
+// 使用 async 关键字定义异步函数，因为数据库连接是耗时的“异步操作”
 const connectDB = async () => {
   try {
+    // await 会等待连接成功后再继续执行后面的代码
     const conn = await mongoose.connect(process.env.MONGODB_URI);
     console.log(`✅ MongoDB 连接成功: ${conn.connection.host}`);
   } catch (error) {
+    // 如果连接出错（比如数据库没开），会进入这里
     console.error(`❌ 连接错误: ${error.message}`);
+    // 强制停止程序，因为没有数据库后端跑不起来
     process.exit(1);
   }
 };
@@ -104,7 +109,18 @@ const connectDB = async () => {
 module.exports = connectDB;
 ```
 
-这一层只负责“连数据库”，不做任何业务逻辑，入口文件只需要调用一次 `connectDB()` 即可。
+::: tip 避坑指南：什么是异步 (Async)？
+想象你去奶茶店点单：
+- **同步**：你点完单，必须站在收银台等奶茶做好，拿到奶茶后，后面的人才能点单。这会导致效率极低（程序卡死）。
+- **异步**：你点完单，拿个取餐码（Promise）就去旁边玩手机了。奶茶做好后通知你。Node.js 的核心优势就是这种“异步非阻塞”模式。
+- **async/await**：是 JavaScript 处理异步最优雅的方式，让异步代码写起来像同步代码一样整齐。
+:::
+
+::: tip 避坑指南
+如果是本地开发，确保你的 MongoDB 服务已经启动！
+- Windows 用户：任务管理器 -> 服务 -> 确认 `MongoDB` 状态为“运行中”。
+- Mac 用户：终端运行 `brew services list` 查看。
+:::
 
 ---
 

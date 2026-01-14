@@ -78,6 +78,13 @@ export default defineConfig({
           link:'/wangluo/index.md'
         },
         {
+          text: '〇、环境准备',
+          collapsed: false,
+          items: [
+            { text: '开发环境搭建', link: '/wangluo/p0_prepare.md' },
+          ]
+        },
+        {
           text: '一、工具介绍',
           collapsed: false,
           items: [
@@ -87,17 +94,18 @@ export default defineConfig({
           ]
         },
         {
-          text: '二、python后端',
+          text: '二、后端实战',
           collapsed: false,
           items: [
-            { text: 'Flask库', link: '/wangluo/p2_flask.md' },
+            { text: 'Python Flask', link: '/wangluo/p2_flask.md' },
+            { text: 'Node.js Express', link: '/wangluo/p3_nodejs.md' },
           ]
         },
         {
-          text: '三、Node.js后端',
+          text: '三、动手实践',
           collapsed: false,
           items: [
-            { text: 'Node.js + Express + MongoDB 实战', link: '/wangluo/p3_nodejs.md' },
+            { text: '你的第一个 API', link: '/wangluo/p4_practice.md' },
           ]
         }
       ]

@@ -19,46 +19,84 @@ Flask 是一个轻量级的 Python Web 框架，以简洁、灵活和易于扩�
 
 ### **基本使用示例**
 1. **安装**  
-   使用 pip 安装：
+   使用 pip 安装（Python 的包管理器）：
    ```bash
    pip install flask
    ```
 
 2. **最小应用**  
-   创建一个简单的 Web 服务：
+   创建一个简单的 Web 服务，体验后端的神奇：
    ```python
+   # 📂 app.py
    from flask import Flask
 
-   app = Flask(__name__)  # 初始化 Flask 应用，__name__ 表示当前模块名
+   # 1. 初始化 Flask 应用
+   # __name__ 是 Python 预定义变量，指向当前模块的名字
+   # Flask 用它来确定资源（如模板和静态文件）的路径
+   app = Flask(__name__)
 
-   @app.route('/')  # 路由装饰器，定义访问路径
+   # 2. 定义路由 (Route)
+   # 装饰器 @app.route('/') 告诉 Flask：当用户访问根路径 "/" 时，执行下面的函数
+   @app.route('/')
    def hello_world():
-       return 'Hello, Flask!'  # 返回响应内容
+       # 函数返回的内容会直接发送给浏览器
+       # 在现代开发中，我们通常返回字符串、HTML 或 JSON
+       return 'Hello, Flask! 你好，云麓谷！'
 
+   # 3. 启动服务
    if __name__ == '__main__':
-       app.run(debug=True)  # 启动开发服务器，debug=True 开启调试模式
+       # debug=True 极其重要！它能让你在修改代码后自动重启服务
+       # 并且如果代码报错，它会在浏览器直接显示错误堆栈，方便调试
+       # port=5000 是 Flask 的默认端口，你可以改成 8000 等其他数字
+       app.run(debug=True, port=5000)
    ```
-   运行后，访问 `http://127.0.0.1:5000` 即可看到 "Hello, Flask!"。
+   运行后，在终端看到 `Running on http://127.0.0.1:5000`，访问它即可看到结果。
 
+### **核心概念详解：为什么这么写？**
 
-### **核心功能**
-1. **路由与视图**  
-   通过 `@app.route()` 装饰器定义 URL 路径与视图函数的映射，支持动态 URL 参数：
+#### **Q: 什么是路由 (Routing)？**
+路由就像是“路标”。后端服务器有很多功能（比如登录、获取文章、上传图片），路由的作用就是根据用户输入的 URL（网址）把请求导向正确的处理函数。
+- **例子**：`www.example.com/login` 导向登录函数，`www.example.com/profile` 导向个人主页函数。
+
+#### **Q: 什么是视图函数 (View Function)？**
+就是上面例子中的 `hello_world`。它负责“处理请求”并“返回结果”。
+- **处理**：从数据库拿数据、计算结果。
+- **返回**：把结果包成 HTTP 响应发回给用户。在现代后端开发中，它通常返回 JSON 格式的数据。
+
+#### **Q: 为什么要用 `if __name__ == '__main__':`？**
+这是 Python 的惯用法。它确保只有当你**直接运行**这个文件时，服务器才会启动；如果你把这个文件当作模块导入到其他地方，服务器就不会莫名其妙地启动。
+
+---
+
+### **核心功能进阶**
+1. **动态路由：处理变化的参数**  
+   如果你想处理“获取 ID 为 10 的用户”，不需要为每个 ID 写一个路由，使用动态参数：
    ```python
-   @app.route('/user/<username>')  # 动态参数 username
-   def show_user(username):
-       return f'User: {username}'
+   @app.route('/user/<int:user_id>')  # <int:user_id> 限制参数必须是整数
+   def show_user(user_id):
+       # 这里的 user_id 变量就是从 URL 中提取出来的
+       return f'正在查询 ID 为 {user_id} 的用户信息'
    ```
 
-2. **请求与响应**  
-   使用 `request` 对象获取请求数据（如表单、URL 参数），通过 `make_response` 或直接返回字符串/JSON 构建响应：
+2. **处理不同的 HTTP 方法：GET 与 POST**  
+   默认路由只接受 `GET`（获取数据）。如果你要提交表单（如注册、登录），需要使用 `POST`：
    ```python
    from flask import request, jsonify
 
-   @app.route('/login', methods=['POST'])  # 支持 POST 方法
+   @app.route('/api/login', methods=['POST'])
    def login():
-       username = request.form.get('username')  # 获取表单数据
-       return jsonify({'status': 'success', 'user': username})  # 返回 JSON
+       # request.json 专门用来获取前端发来的 JSON 格式数据
+       # 如果前端发的是表单数据，则用 request.form
+       data = request.json
+       username = data.get('username')
+       password = data.get('password')
+       
+       if username == 'admin' and password == '123456':
+           # jsonify 会把字典转成标准的 JSON 字符串并设置正确的 HTTP 响应头
+           return jsonify({"code": 200, "msg": "登录成功"})
+       else:
+           # 后面跟着的 401 是 HTTP 状态码，表示“未授权”
+           return jsonify({"code": 401, "msg": "账号或密码错误"}), 401
    ```
 
 3. **模板渲染**  
