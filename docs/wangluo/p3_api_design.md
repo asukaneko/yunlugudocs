@@ -370,7 +370,7 @@ DELETE /api/v1/users/1            删除用户 1
 
 ::: tip 下一步
 有了 API 设计的基础，你可以：
-- 学习 [数据库入门](./p2_database) 了解数据如何存储
-- 开始动手写 [Flask API](./p2_flask) 或 [Express API](./p3_nodejs)
+- 学习 [数据库入门](./p3_database) 了解数据如何存储
+- 开始动手写 [Flask API](./p3_flask) 或 [Express API](./p3_nodejs)
 - 完成 [实战练习](./p4_practice) 中的留言板项目
 :::

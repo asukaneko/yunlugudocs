@@ -86,37 +86,43 @@ export default defineConfig({
           ]
         },
         {
-          text: '一、工具介绍',
+          text: '一、计算机网络',
           collapsed: false,
           items: [
-            { text: '计算机网络', link: '/wangluo/p1_network.md' },
+            { text: '计算机网络概览', link: '/wangluo/p1_network.md' },
             { text: '网络世界的第一步', link: '/wangluo/p1_network_basics.md' },
             { text: '网络协议与分层模型', link: '/wangluo/p1_network_protocols.md' },
             { text: '网络实战工具', link: '/wangluo/p1_network_tools.md' },
             { text: '网络进阶知识', link: '/wangluo/p1_network_advanced.md' },
-            { text: 'git与github', link: '/wangluo/p1_github.md' },
-            { text: 'apifox', link: '/wangluo/p1_apifox.md'},
           ]
         },
         {
-          text: '二、后端实战',
+          text: '二、开发工具',
           collapsed: false,
           items: [
-            { text: 'RESTful API 设计', link: '/wangluo/p2_api_design.md' },
-            { text: '数据库入门', link: '/wangluo/p2_database.md' },
-            { text: 'Python Flask', link: '/wangluo/p2_flask.md' },
+            { text: 'Git 与 GitHub', link: '/wangluo/p2_github.md' },
+            { text: 'Apifox', link: '/wangluo/p2_apifox.md' },
+          ]
+        },
+        {
+          text: '三、后端开发',
+          collapsed: false,
+          items: [
+            { text: 'RESTful API 设计', link: '/wangluo/p3_api_design.md' },
+            { text: '数据库入门', link: '/wangluo/p3_database.md' },
+            { text: 'Python Flask', link: '/wangluo/p3_flask.md' },
             { text: 'Node.js Express', link: '/wangluo/p3_nodejs.md' },
           ]
         },
         {
-          text: '三、动手实践',
+          text: '四、动手实践',
           collapsed: false,
           items: [
             { text: '你的第一个 API', link: '/wangluo/p4_practice.md' },
           ]
         },
         {
-          text: '四、部署上线',
+          text: '五、部署上线',
           collapsed: false,
           items: [
             { text: '部署入门指南', link: '/wangluo/p5_deploy.md' },

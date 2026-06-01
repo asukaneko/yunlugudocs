@@ -362,5 +362,5 @@ cursor.execute("SELECT * FROM users WHERE name = %s", (user_input,))
 ::: tip 继续学习
 - 想动手实践？回到 [实战练习](./p4_practice) 写你的第一个 API
 - 想深入理解 HTTP？阅读 [计算机网络](./p1_network) 了解浏览器加载网页的完整流程
-- 想了解后端开发？开始学习 [Flask](./p2_flask) 或 [Node.js Express](./p3_nodejs)
+- 想了解后端开发？开始学习 [Flask](./p3_flask) 或 [Node.js Express](./p3_nodejs)
 :::

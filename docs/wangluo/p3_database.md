@@ -3,7 +3,7 @@
 前面我们写的 API 都是把数据存在内存里（Python 的 list、JavaScript 的数组），服务器一重启数据就没了。在真实项目中，数据需要**持久化存储**——这就是数据库的工作。
 
 ::: tip 前置知识
-建议先阅读 [RESTful API 设计指南](./p2_api_design) 了解 API 的基本概念。
+建议先阅读 [RESTful API 设计指南](./p3_api_design) 了解 API 的基本概念。
 :::
 
 ---
@@ -376,6 +376,6 @@ DELETE FROM users WHERE name = '张三';
 
 ::: tip 下一步
 - 学习 [Node.js Express](./p3_nodejs) 了解如何在后端代码中使用 MongoDB
-- 学习 [Flask](./p2_flask) 了解 Python 中使用数据库的方式
+- 学习 [Flask](./p3_flask) 了解 Python 中使用数据库的方式
 - 完成 [实战练习](./p4_practice) 中的留言板项目，尝试给它加上数据库
 :::
