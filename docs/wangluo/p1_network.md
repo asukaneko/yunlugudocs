@@ -33,7 +33,28 @@
 3. **前端响应**：前端根据后端返回的数据更新页面（如跳转到用户主页，或显示“密码错误”）。
 
 **类比**：  
-前端像“餐厅服务员”，负责接待顾客（用户）和传递订单；后端像“厨师”，根据订单（请求）做菜（处理数据），最后由服务员将菜（结果）端给顾客。
+前端像”餐厅服务员”，负责接待顾客（用户）和传递订单；后端像”厨师”，根据订单（请求）做菜（处理数据），最后由服务员将菜（结果）端给顾客。
+
+**前后端交互时序图**（以登录为例）：
+
+```
+用户        浏览器(前端)              服务器(后端)           数据库
+ │            │                        │                    │
+ │  点击登录   │                        │                    │
+ │ ─────────► │                        │                    │
+ │            │  POST /login           │                    │
+ │            │  {用户名, 密码}         │                    │
+ │            │ ──────────────────────►│                    │
+ │            │                        │  查询用户数据        │
+ │            │                        │ ──────────────────►│
+ │            │                        │ ◄──────────────────│
+ │            │                        │  验证密码            │
+ │            │  {status:”success”,    │                    │
+ │            │   token:”xxx”}         │                    │
+ │            │ ◄──────────────────────│                    │
+ │  页面跳转   │                        │                    │
+ │ ◄───────── │                        │                    │
+```
 
 ---
 
@@ -55,6 +76,26 @@
   ```
 - 请求通过TCP连接发送到服务器。
 
+::: info HTTP 请求头常见字段
+```http
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+Accept: text/html,application/xhtml+xml
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+Cookie: session_id=abc123
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+```
+| 字段 | 含义 |
+|------|------|
+| **Host** | 目标服务器的域名（必须） |
+| **User-Agent** | 浏览器和操作系统信息 |
+| **Accept** | 客户端能处理的数据类型 |
+| **Accept-Language** | 客户端偏好的语言 |
+| **Cookie** | 浏览器存储的会话信息 |
+| **Authorization** | 身份认证凭证（如 Token） |
+:::
+
 #### 4. **服务器处理请求**
 - **后端逻辑**：服务器（如Nginx）接收请求，可能转发给后端应用（如Node.js）。
 - **静态资源**：如果是HTML/CSS/JS文件，服务器直接返回文件内容。
@@ -68,6 +109,35 @@
   
   <html>...</html>
   ```
+
+::: info HTTP 状态码分类
+| 状态码范围 | 含义 | 常见例子 |
+|-----------|------|---------|
+| **1xx** | 信息性响应 | `100 Continue`（继续发送） |
+| **2xx** | ✅ 成功 | `200 OK`（成功）、`201 Created`（创建成功） |
+| **3xx** | 重定向 | `301 Moved Permanently`（永久重定向）、`302 Found`（临时重定向） |
+| **4xx** | ❌ 客户端错误 | `400 Bad Request`（参数错误）、`401 Unauthorized`（未认证）、`403 Forbidden`（无权限）、`404 Not Found`（资源不存在） |
+| **5xx** | ❌ 服务器错误 | `500 Internal Server Error`（服务器内部错误）、`502 Bad Gateway`（网关错误）、`503 Service Unavailable`（服务不可用） |
+
+:::
+
+::: info HTTP 响应头常见字段
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Content-Length: 35
+Cache-Control: no-cache
+Set-Cookie: session_id=xyz789
+Access-Control-Allow-Origin: *
+```
+| 字段 | 含义 |
+|------|------|
+| **Content-Type** | 响应数据的类型（HTML/JSON/图片等） |
+| **Content-Length** | 响应体的字节大小 |
+| **Cache-Control** | 缓存策略 |
+| **Set-Cookie** | 让浏览器保存 Cookie |
+| **Access-Control-Allow-Origin** | 跨域访问控制（CORS） |
+:::
 
 #### 6. **浏览器渲染页面**
 - **解析HTML**：构建DOM（文档对象模型）树。
@@ -88,3 +158,20 @@
 ```
 
 通过以上流程，前端与后端协同工作，将动态、交互式的网页呈现给用户。
+
+---
+
+# 五、下一步学习
+
+如果你对本篇涉及的概念（IP 地址、DNS、TCP、HTTP 等）还不太熟悉，我们准备了更详细的入门文档：
+
+| 文档 | 适合谁 | 你会学到 |
+|------|--------|---------|
+| [**网络世界的第一步**](./p1_network_basics) | 完全零基础 | IP、MAC、DNS、端口、URL 等核心概念 |
+| [**网络协议与分层模型**](./p1_network_protocols) | 想理解数据传输原理 | TCP/IP 四层模型、TCP vs UDP、HTTPS、WebSocket |
+| [**网络实战工具**](./p1_network_tools) | 想动手体验 | ping、curl、nslookup、开发者工具等实用命令 |
+| [**网络进阶知识**](./p1_network_advanced) | 想了解更多 | NAT、子网、防火墙、CDN、Cookie/Session/Token |
+
+::: tip 学习建议
+建议按 **基础 → 协议 → 工具 → 进阶** 的顺序学习。不需要一次全部看完，可以在后续的后端开发实践中按需查阅。
+:::

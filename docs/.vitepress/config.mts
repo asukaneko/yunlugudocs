@@ -49,6 +49,7 @@ export default defineConfig({
   title: "中南云麓谷新生培训文档",
   description: "",
   lang: 'zh-CN',
+  base: process.env.DEPLOY_TARGET === 'gh-pages' ? '/yunlugudocs/' : '/',
   head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   themeConfig: {
     docFooter: { 
@@ -89,6 +90,10 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: '计算机网络', link: '/wangluo/p1_network.md' },
+            { text: '网络世界的第一步', link: '/wangluo/p1_network_basics.md' },
+            { text: '网络协议与分层模型', link: '/wangluo/p1_network_protocols.md' },
+            { text: '网络实战工具', link: '/wangluo/p1_network_tools.md' },
+            { text: '网络进阶知识', link: '/wangluo/p1_network_advanced.md' },
             { text: 'git与github', link: '/wangluo/p1_github.md' },
             { text: 'apifox', link: '/wangluo/p1_apifox.md'},
           ]
@@ -97,6 +102,8 @@ export default defineConfig({
           text: '二、后端实战',
           collapsed: false,
           items: [
+            { text: 'RESTful API 设计', link: '/wangluo/p2_api_design.md' },
+            { text: '数据库入门', link: '/wangluo/p2_database.md' },
             { text: 'Python Flask', link: '/wangluo/p2_flask.md' },
             { text: 'Node.js Express', link: '/wangluo/p3_nodejs.md' },
           ]
@@ -106,6 +113,13 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: '你的第一个 API', link: '/wangluo/p4_practice.md' },
+          ]
+        },
+        {
+          text: '四、部署上线',
+          collapsed: false,
+          items: [
+            { text: '部署入门指南', link: '/wangluo/p5_deploy.md' },
           ]
         }
       ]
